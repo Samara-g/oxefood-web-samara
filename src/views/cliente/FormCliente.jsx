@@ -1,10 +1,40 @@
+import axios from "axios";
 import React from "react";
 import InputMask from 'react-input-mask';
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 
 class FormCliente extends React.Component{
 
-    render(){
+	state = {
+
+		nome: null,
+		cpf: null,
+		dataNascimento: null,
+		foneCelular: null,
+		foneFixo: null
+	}
+	salvar = () => {
+
+		let clienteRequest = {
+
+			nome: this.state.nome,
+			cpf: this.state.cpf,
+			dataNascimento: this.state.dataNascimento,
+			foneCelular: this.state.foneCelular,
+			foneFixo: this.state.foneFixo
+		}
+	
+		axios.post("http://localhost:8082/api/cliente", clienteRequest)
+		.then((response) => {
+			console.log('Cliente cadastrado com sucesso.')
+		})
+		.catch((error) => {
+			console.log('Erro ao incluir o um cliente.')
+		})
+	}
+
+	render(){
+
         return(
             <div>
 
@@ -27,13 +57,18 @@ class FormCliente extends React.Component{
 										fluid
 										label='Nome'
 										maxLength="100"
+										value={this.state.nome}
+			                           onChange={e => this.setState({nome: e.target.value})}
 									/>
 
 									<Form.Input
 										fluid
 										label='CPF'>
 										<InputMask 
-										mask="999.999.999-99"/> 
+										mask="999.999.999-99"
+										value={this.state.cpf}
+										onChange={e => this.setState({cpf: e.target.value})} 
+										/> 
 									</Form.Input>
 
 								</Form.Group>
@@ -45,7 +80,10 @@ class FormCliente extends React.Component{
 										label='Fone Celular'
                                         width={6}>
 										<InputMask 
-										mask="(99) 9999.9999" /> 
+										mask="(99) 9999.9999" 
+										value={this.state.foneCelular}
+										onChange={e => this.setState({foneCelular: e.target.value})} 
+										/> 
 									</Form.Input>
 
 									<Form.Input
@@ -53,7 +91,10 @@ class FormCliente extends React.Component{
 										label='Fone Fixo'
                                         width={6}>
 										<InputMask 
-										mask="(99) 9999.9999" /> 
+										mask="(99) 9999.9999" 
+										value={this.state.foneFixo}
+										onChange={e => this.setState({foneFixo: e.target.value})} 
+										/> 
 									</Form.Input>
 
                                     <Form.Input

@@ -1,6 +1,6 @@
 import React from "react";
 import InputMask from 'react-input-mask';
-import { Button, Container, Divider, Form, FormGroup, Icon } from 'semantic-ui-react';
+import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 
 class FormProduto extends React.Component{
 
@@ -27,56 +27,72 @@ class FormProduto extends React.Component{
 										fluid
 										label='Título'
 										maxLength="100"
-                                        width={8}
-                                        placeholder="Informe o título do produto"
-
+                                        placeholder ="Informe o Título do Produto"
 									/>
 
 									<Form.Input
-										required
-										label='Código do produto'
-                                        width={3}
-                                        placeholder="Informe o código do produto"
-                                            ></Form.Input>
+                                        required
+										fluid
+										label='Código do Produto'>
+										<InputMask 
+										mask="999.999.999-99"
+                                         placeholder ="Informe o Código do Produto"
+                                        /> 
+                                        
+									</Form.Input>
 
 								</Form.Group>
 								
 								<Form.Group>
-                                    
+
+                                
 									<Form.TextArea
 										fluid
 										label='Descrição'
                                         width={16}
-                                        placeholder="Informe a descrição do produto"
+                                        placeholder ="Informe a Descrição do Produto"
                                         >
-									</Form.TextArea>
-                                   
-</Form.Group>
-<Form.Group>
+									
+                                        </Form.TextArea>
+                                  </Form.Group>
+                                  <Form.Group>
 									<Form.Input
-										required
+                                        required
+										fluid
 										label='Valor Unitário'
-                                        width={6}
-                                       > 
-                                        
+                                        width={7}>
+										<InputMask 
+										mask="00.0" 
+                                       
+                                        /> 
 									</Form.Input>
 
+                             
                                     <Form.Input
                                         fluid
-                                        label='Tempo de entrega mínimo em minutos'
-                                        width={6}
-                                         placeholder="30"
+                                        label='Tempo de Entrega Mínimo em Minutos'
+                                        placeholder="Ex: 20/03/1985"
+                                        width={7}
                                     >
+                                        <InputMask 
+                                            mask="99/99/9999" 
+                                            maskChar={null}
+                                            placeholder="30"
+                                           
+                                        /> 
                                     </Form.Input>
-
-                                    <Form.Input
-                                        fluid
-                                        label='Tempo de entrega máximo em minutos'
-                                        width={6}
-                                        placeholder="40"
-                                    >
-                                    </Form.Input>
-
+                           
+                                    
+									<Form.Input
+										fluid
+										label='Tempo de Entrega Máximo em Minutos'
+                                        width={7}>
+										<InputMask 
+										 placeholder="40"
+                                         
+                                         /> 
+									</Form.Input>
+                             
 								</Form.Group>
 
 								<Form.Group widths='equal' style={{marginTop: '4%'}}  className='form--empresa-salvar'>
@@ -91,7 +107,7 @@ class FormProduto extends React.Component{
 										onClick={this.listar}
 										>
 										<Icon name='reply' />
-										Listar
+										Voltar
 									</Button>
 
 									<Container textAlign='right'>
