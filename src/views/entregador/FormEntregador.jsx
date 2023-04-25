@@ -45,7 +45,7 @@ class FormEntregador extends React.Component{
             enderecoCep: this.state.enderecoCep,
             enderecoUf: this.state.enferecoUf,
             enderecoComplemento: this.state.enderecoComplemento,
-            ativo: this.state.ativo
+           
 		}
 	
 		axios.post("http://localhost:8082/api/entregador", EntregadorRequest)
@@ -81,17 +81,20 @@ class FormEntregador extends React.Component{
 										fluid
 										label='Nome'
 										maxLength="100"
+										placeholder ="Nome Completo"
 										value={this.state.nome}
 			                           onChange={e => this.setState({nome: e.target.value})}
 									/>
 
 									<Form.Input
 										fluid
-										label='CPF'>
+										label='CPF'
+										>
 										<InputMask 
 										mask="999.999.999-99"
 										value={this.state.cpf}
 										onChange={e => this.setState({cpf: e.target.value})} 
+										placeholder ="Informe seu CPF"
 										/> 
 									</Form.Input>
 							
@@ -100,9 +103,10 @@ class FormEntregador extends React.Component{
 										fluid
 										label='RG'>
 										<InputMask 
-										mask="999.999.999"
+										mask="99.999.999"
 										value={this.state.rg}
 										onChange={e => this.setState({rg: e.target.value})} 
+										placeholder ="Informe seu RG"
 										/> 
 									</Form.Input>
 
@@ -132,6 +136,7 @@ class FormEntregador extends React.Component{
 										mask="(99) 9999.9999" 
 										value={this.state.foneCelular}
 										onChange={e => this.setState({foneCelular: e.target.value})} 
+										placeholder ="Número de Celular"
 										/> 
 									</Form.Input>
 
@@ -142,7 +147,8 @@ class FormEntregador extends React.Component{
 										<InputMask 
 										mask="(99) 9999.9999" 
 										value={this.state.foneFixo}
-										onChange={e => this.setState({foneFixo: e.target.value})} 
+										onChange={e => this.setState({foneFixo: e.target.value})}
+										placeholder ="Número Fixo" 
 										/> 
 									</Form.Input>
 
@@ -153,77 +159,83 @@ class FormEntregador extends React.Component{
                                     <Form.Input
                                         required
 										fluid
-										label='qtdEntregasRealizadas'
-                                        width={7}>
-										<InputMask 
-										mask="00" 
-                                        value={this.state.qtdEntregasRealizadas}
+										label='Entregas Realizadas'
+                                        width={8}
+									 value={this.state.qtdEntregasRealizadas}
 										onChange={e => this.setState({qtdEntregasRealizadas: e.target.value})} 
-                                        /> 
+										placeholder ="Número de Entegas Realizadas"
+                                    >
 									</Form.Input>
 
                                     <Form.Input
                                         required
 										fluid
-										label='ValorFrete'
-                                        width={7}>
-										<InputMask 
-										mask="00.0" 
+										label='Valor do Frete'
+                                        width={8}
+										
                                         value={this.state.ValorFrete}
 										onChange={e => this.setState({ValorFrete: e.target.value})} 
-                                        /> 
+										placeholder ="Valor do frete"
+                                     >
 									</Form.Input>
-                                    
-                                    <Form.Input
+                                     </Form.Group>
+                                    <Form.Group>
+								    <Form.Input
 										required
 										fluid
-										label='enderecoRua'
-										maxLength="100"
+										label='Rua'
+										width={5}
 										value={this.state.enderecoRua}
 			                           onChange={e => this.setState({enderecoRua: e.target.value})}
+									   placeholder ="Nome da Rua"
 									/>
-                            </Form.Group>
-                            <Form.Group>
+                           
+                           
                                     <Form.Input
                                         required
 										fluid
-										label='enderecoNumero'
-                                        width={7}>
-										<InputMask 
-										mask="00" 
+										label='Numero'
+                                        width={6}
+										
                                         value={this.state.enderecoNumero}
 										onChange={e => this.setState({enderecoNumero: e.target.value})} 
-                                        /> 
+										placeholder ="Numero da Residência"
+                                        > 
 									</Form.Input>
 
                                     <Form.Input
 										required
 										fluid
-										label='enderecoBairro'
-										maxLength="100"
+										label='Bairro'
+										width={5}
 										value={this.state.enderecoBairro}
 			                           onChange={e => this.setState({enderecoBairro: e.target.value})}
+									   placeholder ="Nome do Bairro"
 									/>
                             
-                                    <Form.Input
-										required
-										fluid
-										label='enderecoCidade'
-										maxLength="100"
-										value={this.state.enderecoCidade}
-			                           onChange={e => this.setState({enderecoCidade: e.target.value})}
-									/>
+                                  
                                 </Form.Group>
                                 <Form.Group>
+
+								<Form.Input
+										required
+										fluid
+										label='Cidade'
+										width={4}
+										value={this.state.enderecoCidade}
+			                           onChange={e => this.setState({enderecoCidade: e.target.value})}
+									   placeholder ="Nome da Cidade"
+									/>
                                      <Form.Input
                                         required
 										fluid
-										label='enderecoCep'
-                                        width={7}>
+										label='CEP'
+                                        width={4}>
 										<InputMask 
 										maxLength="100"
                                         value={this.state.enderecoCep}
 										onChange={e => this.setState({enderecoCep: e.target.value})} 
+										placeholder ="Número do CEP"
                                         /> 
 									</Form.Input>
                              
@@ -231,19 +243,21 @@ class FormEntregador extends React.Component{
                                     <Form.Input
 										required
 										fluid
-										label='enferecoUf'
-										maxLength="100"
+										label='UF'
+										width={4}
 										value={this.state.enferecoUf}
 			                           onChange={e => this.setState({enferecoUf: e.target.value})}
+									   placeholder ="Informe a UF"
 									/>
                                     
                                        <Form.Input
 										required
 										fluid
-										label='enderecoComplemento'
-										maxLength="100"
+										label='Complemento'
+										width={4}
 										value={this.state.enderecoComplemento}
 			                           onChange={e => this.setState({enderecoComplemento: e.target.value})}
+									   placeholder ="Informe o Complemento"
 									/>
                             
                                    </Form.Group>

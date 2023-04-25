@@ -59,6 +59,7 @@ class FormCliente extends React.Component{
 										maxLength="100"
 										value={this.state.nome}
 			                           onChange={e => this.setState({nome: e.target.value})}
+									   placeholder ="Nome Completo"
 									/>
 
 									<Form.Input
@@ -68,6 +69,7 @@ class FormCliente extends React.Component{
 										mask="999.999.999-99"
 										value={this.state.cpf}
 										onChange={e => this.setState({cpf: e.target.value})} 
+										placeholder ="Informe seu CPF"
 										/> 
 									</Form.Input>
 
@@ -82,7 +84,8 @@ class FormCliente extends React.Component{
 										<InputMask 
 										mask="(99) 9999.9999" 
 										value={this.state.foneCelular}
-										onChange={e => this.setState({foneCelular: e.target.value})} 
+										onChange={e => this.setState({foneCelular: e.target.value})}
+										placeholder ="Número de Celular" 
 										/> 
 									</Form.Input>
 
@@ -94,6 +97,7 @@ class FormCliente extends React.Component{
 										mask="(99) 9999.9999" 
 										value={this.state.foneFixo}
 										onChange={e => this.setState({foneFixo: e.target.value})} 
+										placeholder ="Número Fixo" 
 										/> 
 									</Form.Input>
 
@@ -104,6 +108,8 @@ class FormCliente extends React.Component{
                                     >
                                         <InputMask 
                                             mask="99/99/9999" 
+											value={this.state.dataNascimento}
+											onChange={e => this.setState({dataNascimento: e.target.value})} 
                                             maskChar={null}
                                             placeholder="Ex: 20/03/1985"
                                         /> 

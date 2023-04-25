@@ -1,9 +1,41 @@
+import axios from "axios";
 import React from "react";
 import InputMask from 'react-input-mask';
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 
 class FormProduto extends React.Component{
 
+	state = {
+
+		codigo:null,
+		titulo:null,
+		descricao:null,
+		valorFrete:null,
+		tempoEntregaMinimo:null,
+		tempoEntregaMaximo:null
+
+	}
+
+    salvar = () => {
+
+		let produtoRequest = {
+
+			codigo: this.state.codigo,
+			titulo: this.state.titulo,
+            descricao: this.state.descricao,
+			tempoEntregaMinimo: this.state.tempoEntregaMinimo,
+			tempoEntregaMaximo: this.state.tempoEntregaMaximo
+            
+		}
+	
+		axios.post("http://localhost:8082/api/produto", produtoRequest)
+		.then((response) => {
+			console.log('produto cadastrado com sucesso.')
+		})
+		.catch((error) => {
+			console.log('Erro ao incluir o um produto.')
+		})
+	}
     render(){
         return(
             <div>
@@ -28,6 +60,8 @@ class FormProduto extends React.Component{
 										label='Título'
 										maxLength="100"
                                         placeholder ="Informe o Título do Produto"
+										value={this.state.titulo}
+										onChange={e => this.setState({titulo: e.target.value})} 
 									/>
 
 									<Form.Input
@@ -37,6 +71,8 @@ class FormProduto extends React.Component{
 										<InputMask 
 										mask="999.999.999-99"
                                          placeholder ="Informe o Código do Produto"
+										 value={this.state.codigo}
+										onChange={e => this.setState({codigo: e.target.value})} 
                                         /> 
                                         
 									</Form.Input>
@@ -51,6 +87,8 @@ class FormProduto extends React.Component{
 										label='Descrição'
                                         width={16}
                                         placeholder ="Informe a Descrição do Produto"
+										value={this.state.descricao}
+										onChange={e => this.setState({descricao: e.target.value})} 
                                         >
 									
                                         </Form.TextArea>
@@ -60,37 +98,36 @@ class FormProduto extends React.Component{
                                         required
 										fluid
 										label='Valor Unitário'
-                                        width={7}>
-										<InputMask 
-										mask="00.0" 
-                                       
-                                        /> 
+                                        width={7}
+										placeholder ="Informe o Valor Unitário"
+										value={this.state.valorUnitario}
+										onChange={e => this.setState({valorUnitario: e.target.value})} 
+                                         	>
 									</Form.Input>
 
                              
                                     <Form.Input
                                         fluid
-                                        label='Tempo de Entrega Mínimo em Minutos'
-                                        placeholder="Ex: 20/03/1985"
+                                        label='Tempo de Entrega Mínimo'
+                                        placeholder="30"
                                         width={7}
-                                    >
-                                        <InputMask 
-                                            mask="99/99/9999" 
-                                            maskChar={null}
-                                            placeholder="30"
-                                           
-                                        /> 
+									  maskChar={null}
+									  value={this.state.tempoEntregaMinimo}
+									  onChange={e => this.setState({tempoEntregaMinimo: e.target.value})} 
+                                    
+                                        > 
                                     </Form.Input>
                            
                                     
 									<Form.Input
 										fluid
-										label='Tempo de Entrega Máximo em Minutos'
-                                        width={7}>
-										<InputMask 
+										label='Tempo de Entrega Máximo'
+                                        width={7}
 										 placeholder="40"
+										 value={this.state.tempoEntregaMaximo}
+									  onChange={e => this.setState({tempoEntregaMaximo: e.target.value})} 
                                          
-                                         /> 
+                                         > 
 									</Form.Input>
                              
 								</Form.Group>
