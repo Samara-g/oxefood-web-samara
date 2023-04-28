@@ -1,5 +1,6 @@
 import axios from "axios";
 import React from "react";
+import { Link } from "react-router-dom";
 import InputMask from 'react-input-mask';
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 
@@ -22,8 +23,8 @@ class FormEntregador extends React.Component{
         enderecoCidade:null,
         enderecoCep:null,
         enferecoUf: null,
-        enderecoComplemento: null,
-        ativo: null
+        enderecoComplemento: null
+      
 	}
 
     salvar = () => {
@@ -44,7 +45,7 @@ class FormEntregador extends React.Component{
             enderecoCidade: this.state.enderecoCidade,
             enderecoCep: this.state.enderecoCep,
             enderecoUf: this.state.enferecoUf,
-            enderecoComplemento: this.state.enderecoComplemento,
+            enderecoComplemento: this.state.enderecoComplemento
            
 		}
 	
@@ -164,8 +165,8 @@ class FormEntregador extends React.Component{
 									 value={this.state.qtdEntregasRealizadas}
 										onChange={e => this.setState({qtdEntregasRealizadas: e.target.value})} 
 										placeholder ="Número de Entegas Realizadas"
-                                    >
-									</Form.Input>
+                                    />
+									
 
                                     <Form.Input
                                         required
@@ -176,8 +177,8 @@ class FormEntregador extends React.Component{
                                         value={this.state.ValorFrete}
 										onChange={e => this.setState({ValorFrete: e.target.value})} 
 										placeholder ="Valor do frete"
-                                     >
-									</Form.Input>
+                                     />
+									
                                      </Form.Group>
                                     <Form.Group>
 								    <Form.Input
@@ -200,8 +201,8 @@ class FormEntregador extends React.Component{
                                         value={this.state.enderecoNumero}
 										onChange={e => this.setState({enderecoNumero: e.target.value})} 
 										placeholder ="Numero da Residência"
-                                        > 
-									</Form.Input>
+                                        /> 
+									
 
                                     <Form.Input
 										required
@@ -271,7 +272,7 @@ class FormEntregador extends React.Component{
 							
 
 								<Form.Group widths='equal' style={{marginTop: '4%'}}  className='form--empresa-salvar'>
-
+								<Link to={'/list-entregador'}>
 									<Button
 										type="button"
 										inverted
@@ -283,8 +284,9 @@ class FormEntregador extends React.Component{
 										>
 										<Icon name='reply' />
 										Voltar
+									
 									</Button>
-
+									</Link>
 									<Container textAlign='right'>
 										
 										<Button

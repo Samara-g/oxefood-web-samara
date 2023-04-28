@@ -1,5 +1,6 @@
 import axios from "axios";
 import React from "react";
+import { Link } from "react-router-dom";
 import InputMask from 'react-input-mask';
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 
@@ -10,7 +11,7 @@ class FormProduto extends React.Component{
 		codigo:null,
 		titulo:null,
 		descricao:null,
-		valorFrete:null,
+		valorUnitario:null,
 		tempoEntregaMinimo:null,
 		tempoEntregaMaximo:null
 
@@ -22,7 +23,8 @@ class FormProduto extends React.Component{
 
 			codigo: this.state.codigo,
 			titulo: this.state.titulo,
-            descricao: this.state.descricao,
+            descricao:this.state.descricao,
+			valorUnitario:this.state.valorUnitario,
 			tempoEntregaMinimo: this.state.tempoEntregaMinimo,
 			tempoEntregaMaximo: this.state.tempoEntregaMaximo
             
@@ -67,15 +69,13 @@ class FormProduto extends React.Component{
 									<Form.Input
                                         required
 										fluid
-										label='Código do Produto'>
-										<InputMask 
-										mask="999.999.999-99"
-                                         placeholder ="Informe o Código do Produto"
+										label='Código do Produto'
+										 placeholder ="Informe o Código do Produto"
 										 value={this.state.codigo}
 										onChange={e => this.setState({codigo: e.target.value})} 
                                         /> 
                                         
-									</Form.Input>
+								
 
 								</Form.Group>
 								
@@ -89,9 +89,9 @@ class FormProduto extends React.Component{
                                         placeholder ="Informe a Descrição do Produto"
 										value={this.state.descricao}
 										onChange={e => this.setState({descricao: e.target.value})} 
-                                        >
+                                        />
 									
-                                        </Form.TextArea>
+                                        
                                   </Form.Group>
                                   <Form.Group>
 									<Form.Input
@@ -102,8 +102,8 @@ class FormProduto extends React.Component{
 										placeholder ="Informe o Valor Unitário"
 										value={this.state.valorUnitario}
 										onChange={e => this.setState({valorUnitario: e.target.value})} 
-                                         	>
-									</Form.Input>
+                                         	/>
+									
 
                              
                                     <Form.Input
@@ -115,8 +115,8 @@ class FormProduto extends React.Component{
 									  value={this.state.tempoEntregaMinimo}
 									  onChange={e => this.setState({tempoEntregaMinimo: e.target.value})} 
                                     
-                                        > 
-                                    </Form.Input>
+                                        /> 
+                                    
                            
                                     
 									<Form.Input
@@ -127,13 +127,13 @@ class FormProduto extends React.Component{
 										 value={this.state.tempoEntregaMaximo}
 									  onChange={e => this.setState({tempoEntregaMaximo: e.target.value})} 
                                          
-                                         > 
-									</Form.Input>
+                                         /> 
+									
                              
 								</Form.Group>
 
 								<Form.Group widths='equal' style={{marginTop: '4%'}}  className='form--empresa-salvar'>
-
+								<Link to={'/list-produto'}>
 									<Button
 										type="button"
 										inverted
@@ -146,6 +146,7 @@ class FormProduto extends React.Component{
 										<Icon name='reply' />
 										Voltar
 									</Button>
+									</Link>
 
 									<Container textAlign='right'>
 										

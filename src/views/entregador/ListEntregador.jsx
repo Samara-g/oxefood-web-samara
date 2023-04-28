@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Container, Divider, Icon, Table } from 'semantic-ui-react';
 
-class ListCliente extends React.Component{
+class ListEntregador extends React.Component{
 
    state = {
 
@@ -52,7 +52,7 @@ render(){
                        <Divider /> 
 
                        <div style={{marginTop: '4%'}}>
-
+                      <Link to={'/form-entregador'}>
                            <Button
                                inverted
                                circular
@@ -62,8 +62,9 @@ render(){
                                floated='right'
                            >
                                <Icon name='clipboard outline' />
-                               <Link to={'/form-entregador'}>Novo</Link>
+                              Novo
                            </Button>
+                           </Link>
  <br/><br/><br/>
                       
                            <Table color='orange' sortable celled>
@@ -72,23 +73,44 @@ render(){
                                    <Table.Row>
                                        <Table.HeaderCell>Nome</Table.HeaderCell>
                                        <Table.HeaderCell>CPF</Table.HeaderCell>
+                                       <Table.HeaderCell>RG</Table.HeaderCell>
                                        <Table.HeaderCell>Data de Nascimento</Table.HeaderCell>
                                        <Table.HeaderCell>Fone Celular</Table.HeaderCell>
                                        <Table.HeaderCell>Fone Fixo</Table.HeaderCell>
+                                       <Table.HeaderCell>Entregas Realizadas</Table.HeaderCell>
+                                       <Table.HeaderCell>Valor do Frete</Table.HeaderCell>
+                                       <Table.HeaderCell>Rua</Table.HeaderCell>
+                                       <Table.HeaderCell>Numero</Table.HeaderCell>
+                                       <Table.HeaderCell>Bairro</Table.HeaderCell>
+                                       <Table.HeaderCell>Cidade</Table.HeaderCell>
+                                       <Table.HeaderCell>CEP</Table.HeaderCell>
+                                       <Table.HeaderCell>UF</Table.HeaderCell>
+                                       <Table.HeaderCell>Complemento</Table.HeaderCell>
                                        <Table.HeaderCell textAlign='center' width={2}>Ações</Table.HeaderCell>
                                    </Table.Row>
                                </Table.Header>
                           
                                <Table.Body>
 
-                                   { this.state.listaClientes.map(cliente => (
+                                   { this.state.listaEntregador.map(entregador => (
 
                                        <Table.Row>
-                                           <Table.Cell>{cliente.nome}</Table.Cell>
-                                           <Table.Cell>{cliente.cpf}</Table.Cell>
-                                           <Table.Cell>{this.formatarData(cliente.dataNascimento)}</Table.Cell>
-                                           <Table.Cell>{cliente.foneCelular}</Table.Cell>
-                                           <Table.Cell>{cliente.foneFixo}</Table.Cell>
+                                           <Table.Cell>{entregador.nome}</Table.Cell>
+                                           <Table.Cell>{entregador.cpf}</Table.Cell>
+                                           <Table.Cell>{entregador.rg}</Table.Cell>
+                                           <Table.Cell>{this.formatarData(entregador.dataNascimento)}</Table.Cell>
+                                           <Table.Cell>{entregador.foneCelular}</Table.Cell>
+                                           <Table.Cell>{entregador.foneFixo}</Table.Cell>
+                                           <Table.Cell>{entregador.qtdEntregasRealizadas}</Table.Cell>
+                                           <Table.Cell>{entregador.valorFrete}</Table.Cell>
+                                           <Table.Cell>{entregador.enderecoRua}</Table.Cell>
+                                           <Table.Cell>{entregador.enderecoNumero}</Table.Cell>
+                                           <Table.Cell>{entregador.enderecoBairro}</Table.Cell>
+                                           <Table.Cell>{entregador.enderecoCidade}</Table.Cell>
+                                           <Table.Cell>{entregador.enderecoCep}</Table.Cell>
+                                           <Table.Cell>{entregador.enderecoUf}</Table.Cell>
+                                           <Table.Cell>{entregador.enderecoComplemento}</Table.Cell>
+                        
                                            <Table.Cell textAlign='center'>
                                               
                                                <Button
@@ -96,13 +118,13 @@ render(){
                                                    circular
                                                    icon='edit'
                                                    color='blue'
-                                                   itle='Clique aqui para editar os dados deste cliente' /> &nbsp;
+                                                   itle='Clique aqui para editar os dados deste entregador' /> &nbsp;
                                               <Button
                                                    inverted
                                                    circular
                                                    icon='trash'
                                                    color='red'
-                                                   title='Clique aqui para remover este cliente' />
+                                                   title='Clique aqui para remover este entregador' />
 
                                            </Table.Cell>
                                        </Table.Row>
@@ -119,4 +141,4 @@ render(){
    }
 }
 
-export default ListCliente;
+export default ListEntregador;

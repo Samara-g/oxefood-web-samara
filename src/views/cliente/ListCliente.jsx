@@ -52,7 +52,7 @@ render(){
                        <Divider /> 
 
                        <div style={{marginTop: '4%'}}>
-
+                       <Link to={'/form-cliente'}>
                            <Button
                                inverted
                                circular
@@ -62,8 +62,9 @@ render(){
                                floated='right'
                            >
                                <Icon name='clipboard outline' />
-                               <Link to={'/form-cliente'}>Novo</Link>
+                               Novo
                            </Button>
+                           </Link>
  <br/><br/><br/>
                       
                            <Table color='orange' sortable celled>
