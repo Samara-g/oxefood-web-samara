@@ -2,6 +2,7 @@ import axios from 'axios';
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Container, Divider, Icon, Table } from 'semantic-ui-react';
+import { ENDERECO_API } from "../util/constantes";
 
 class ListEntregador extends React.Component{
 
@@ -19,7 +20,7 @@ class ListEntregador extends React.Component{
 
 carregarLista = () => {
 
-       axios.get("http://localhost:8082/api/entregador")
+       axios.get( ENDERECO_API + "api/entregador")
        .then((response) => {
           
            this.setState({

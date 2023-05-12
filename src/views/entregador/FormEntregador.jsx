@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import InputMask from 'react-input-mask';
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
-
+import { ENDERECO_API } from "../util/constantes";
 
 class FormEntregador extends React.Component{
     
@@ -49,7 +49,7 @@ class FormEntregador extends React.Component{
            
 		}
 	
-		axios.post("http://localhost:8082/api/entregador", EntregadorRequest)
+		axios.post( ENDERECO_API+ "api/entregador", EntregadorRequest)
 		.then((response) => {
 			console.log('Entregador cadastrado com sucesso.')
 		})
