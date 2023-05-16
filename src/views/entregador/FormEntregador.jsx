@@ -115,11 +115,11 @@ class FormEntregador extends React.Component{
                                     </Form.Group>
 								
                                     <Form.Group>
+										
                                     <Form.Input
                                         fluid
                                         label='Data Nascimento'
-                                        width={6}
-                                    >
+                                        width={6} >
                                         <InputMask 
                                             mask="99/99/9999" 
                                             maskChar={null}

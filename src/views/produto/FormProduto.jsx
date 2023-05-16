@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import InputMask from 'react-input-mask';
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
+import { ENDERECO_API } from "../util/constantes";
 
 class FormProduto extends React.Component{
 
@@ -30,7 +31,7 @@ class FormProduto extends React.Component{
             
 		}
 	
-		axios.post("http://localhost:8082/api/produto", produtoRequest)
+		axios.post( ENDERECO_API + "api/produto", produtoRequest)
 		.then((response) => {
 			console.log('produto cadastrado com sucesso.')
 		})
