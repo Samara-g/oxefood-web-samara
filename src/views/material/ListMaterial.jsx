@@ -79,7 +79,6 @@ render(){
                                        <Table.HeaderCell>Locaalização</Table.HeaderCell>
                                        <Table.HeaderCell>Peso</Table.HeaderCell>
                                        <Table.HeaderCell>Data da Aquisição</Table.HeaderCell>
-                                       
                                        <Table.HeaderCell textAlign='center' width={2}>Ações</Table.HeaderCell>
                                    </Table.Row>
                                </Table.Header>

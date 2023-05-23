@@ -1,41 +1,71 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import InputMask from 'react-input-mask';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 import { ENDERECO_API } from "../util/constantes";
 
-class FormCliente extends React.Component{
+export default function FormCliente () {
 
-	state = {
+	const [idCliente, setIdCliente] = useState();
+const [nome, setNome] = useState();
+const [cpf, setCpf] = useState();
+const [dataNascimento, setDataNascimento] = useState();
+const [foneCelular, setFoneCelular] = useState();
+const [foneFixo, setFoneFixo] = useState();
 
-		nome: null,
-		cpf: null,
-		dataNascimento: null,
-		foneCelular: null,
-		foneFixo: null
+
+const { state } = useLocation();
+   useEffect(() => {
+	
+	if (state != null && state.id != null) {
+	axios.get(ENDERECO_API + "api/cliente/" + state.id)
+    .then((response) => {
+	setIdCliente(response.data.id)
+    setNome(response.data.nome)
+	setCpf(response.data.cpf)
+    setDataNascimento(formatarData(response.data.dataNascimento))
+	setFoneCelular(response.data.foneCelular)
+	setFoneFixo(response.data.foneFixo)
+		})
 	}
-	salvar = () => {
+   }, [state])
+
+
+	function salvar () {
 
 		let clienteRequest = {
 
-			nome: this.state.nome,
-			cpf: this.state.cpf,
-			dataNascimento: this.state.dataNascimento,
-			foneCelular: this.state.foneCelular,
-			foneFixo: this.state.foneFixo
+			nome:nome,
+			cpf:cpf,
+			dataNascimento:dataNascimento,
+			foneCelular:foneCelular,
+			foneFixo:foneFixo
 		}
-	
-		axios.post(ENDERECO_API + "api/cliente", clienteRequest)
-		.then((response) => {
-			console.log('Cliente cadastrado com sucesso.')
-		})
-		.catch((error) => {
-			console.log('Erro ao incluir o um cliente.')
-		})
+
+		if (idCliente != null) { //Alteração:
+			axios.put(ENDERECO_API + "api/cliente/" + idCliente, clienteRequest)
+			.then((response) => { console.log('Cliente alterado com sucesso.') })
+			.catch((error) => { console.log('Erro ao alter um cliente.') })
+		} else { //Cadastro:
+			axios.post(ENDERECO_API + "api/cliente", clienteRequest)
+			.then((response) => { console.log('Cliente cadastrado com sucesso.') })
+			.catch((error) => { console.log('Erro ao incluir o cliente.') })
+		}
+ 
 	}
 
-	render(){
+	function formatarData (dataParam) {
+
+		let data = new Date(dataParam);
+		let dia = data.getDate() < 10 ? "0" + data.getDate() : data.getDate();
+		let mes = (data.getMonth() + 1) < 10 ? "0" + (data.getMonth() + 1) : (data.getMonth() + 1);
+		let dataFormatada = dia + "/" + mes + "/" + data.getFullYear();
+	   
+		return dataFormatada
+	};
+
+	
 
         return(
             <div>
@@ -44,7 +74,13 @@ class FormCliente extends React.Component{
 
                     <Container textAlign='justified' >
 
-                        <h2> <span style={{color: 'darkgray'}}> Cliente &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro </h2>
+					{ idCliente === undefined &&
+                  <h2> <span style={{color: 'darkgray'}}> Cliente &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro</h2>
+                       }
+                  { idCliente != undefined &&
+                  <h2> <span style={{color: 'darkgray'}}> Cliente &nbsp;<Icon name='angle double right' size="small" /> </span> Alteração</h2>
+                    }
+
 
                         <Divider />
 
@@ -59,8 +95,8 @@ class FormCliente extends React.Component{
 										fluid
 										label='Nome'
 										maxLength="100"
-										value={this.state.nome}
-			                           onChange={e => this.setState({nome: e.target.value})}
+										value={nome}
+										onChange={e => setNome(e.target.value)}
 									   placeholder ="Nome Completo"
 									/>
 
@@ -69,8 +105,8 @@ class FormCliente extends React.Component{
 										label='CPF'>
 										<InputMask 
 										mask="999.999.999-99"
-										value={this.state.cpf}
-										onChange={e => this.setState({cpf: e.target.value})} 
+										value={cpf}
+										onChange={e => setCpf(e.target.value)} 
 										placeholder ="Informe seu CPF"
 										/> 
 									</Form.Input>
@@ -85,8 +121,8 @@ class FormCliente extends React.Component{
                                         width={6}>
 										<InputMask 
 										mask="(99) 9999.9999" 
-										value={this.state.foneCelular}
-										onChange={e => this.setState({foneCelular: e.target.value})}
+										value={foneCelular}
+										onChange={e => setFoneCelular(e.target.value)}
 										placeholder ="Número de Celular" 
 										/> 
 									</Form.Input>
@@ -97,8 +133,8 @@ class FormCliente extends React.Component{
                                         width={6}>
 										<InputMask 
 										mask="(99) 9999.9999" 
-										value={this.state.foneFixo}
-										onChange={e => this.setState({foneFixo: e.target.value})} 
+										value={foneFixo}
+										onChange={e => setFoneFixo(e.target.value)} 
 										placeholder ="Número Fixo" 
 										/> 
 									</Form.Input>
@@ -110,8 +146,8 @@ class FormCliente extends React.Component{
                                     >
                                         <InputMask 
                                             mask="99/99/9999" 
-											value={this.state.dataNascimento}
-											onChange={e => this.setState({dataNascimento: e.target.value})} 
+											value={dataNascimento}
+											onChange={e => setDataNascimento(e.target.value)} 
                                             maskChar={null}
                                             placeholder="Ex: 20/03/1985"
                                         /> 
@@ -143,7 +179,7 @@ class FormCliente extends React.Component{
 											labelPosition='left'
 											color='blue'
 											floated='right'
-											onClick={this.salvar}
+											onClick={() => salvar()}
 										>
 											<Icon name='save' />
 											Salvar
@@ -160,6 +196,5 @@ class FormCliente extends React.Component{
 			</div>
 		)
 	}
-}
 
-export default FormCliente;
+
