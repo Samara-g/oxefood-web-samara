@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React from "react";
-import { Link } from "react-router-dom";
 import { Button, Container, Divider, Icon, Table } from 'semantic-ui-react';
 import { ENDERECO_API } from "../util/constantes";
 
@@ -8,7 +7,9 @@ class ListMaterial extends React.Component{
 
    state = {
 
-       listaMaterial: []
+       listaMaterial: [],
+       openModal: false,
+       materialObj: {}
       
    }
 
@@ -31,15 +32,37 @@ carregarLista = () => {
    };
    formatarData = (dataParam) => {
 
-    let data = new Date(dataParam);
-    let dia = data.getDate() < 10 ? "0" + data.getDate() : data.getDate();
-    let mes = (data.getMonth() + 1) < 10 ? "0" + (data.getMonth() + 1) : (data.getMonth() + 1);
-    let dataFormatada = dia + "/" + mes + "/" + data.getFullYear();
-   
+    if (dataParam == null || dataParam == '') {
+        return ''
+    }
+    
+    let dia = dataParam.substr(8,2);
+    let mes = dataParam.substr(5,2);
+    let ano = dataParam.substr(0,4);
+    let dataFormatada = dia + '/' + mes + '/' + ano;
+
     return dataFormatada
 };
 
+setOpenModal = (val) => {
 
+    this.setState({ 
+        openModal: val
+    })
+};
+
+exibirDetalheMaterial = (id) => {
+
+    axios.get(ENDERECO_API + "api/material/" + id)
+    .then((response) => {
+      
+        this.setState({
+            entregadorObj: response.data,
+            openModal: true,
+        })
+    })
+
+};
    
 render(){
        return(
@@ -54,7 +77,7 @@ render(){
                        <Divider /> 
 
                        <div style={{marginTop: '4%'}}>
-                      <Link to={'/form-Material'}>
+                    
                            <Button
                                inverted
                                circular
@@ -66,7 +89,7 @@ render(){
                                <Icon name='clipboard outline' />
                               Novo
                            </Button>
-                           </Link>
+                           
  <br/><br/><br/>
                       
                            <Table color='orange' sortable celled>
@@ -94,22 +117,30 @@ render(){
                                            <Table.Cell>{material.localizacao}</Table.Cell>
                                            <Table.Cell>{material.peso}</Table.Cell>
                                            <Table.Cell>{this.formatarData( material.dataAquisicao)}</Table.Cell>
-                                     
-                        
                                            <Table.Cell textAlign='center'>
                                               
-                                               <Button
+                                           <Button
+                                                   inverted
+                                                   circular
+                                                   icon='file alternate outline'
+                                                   color='green'
+                                                   title='Clique aqui para exibir este material' 
+                                                   onClick={e => this.exibirDetalheMaterial(material.id)}
+                                                />  &nbsp;
+                                              
+                                                <Button
                                                    inverted
                                                    circular
                                                    icon='edit'
                                                    color='blue'
-                                                   itle='Clique aqui para editar os dados deste Material' /> &nbsp;
-                                              <Button
+                                                   itle='Clique aqui para editar os dados deste material' /> &nbsp;
+                                                   
+                                                <Button
                                                    inverted
                                                    circular
                                                    icon='trash'
                                                    color='red'
-                                                   title='Clique aqui para remover este Material' />
+                                                   title='Clique aqui para remover este material' />
 
                                            </Table.Cell>
                                        </Table.Row>

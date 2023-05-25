@@ -5,6 +5,12 @@ import { Link } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 import { ENDERECO_API } from "../util/constantes";
 
+const ufList = [
+	{ key: 'o', text: 'Alagoas', value: 'AL' },
+	{ key: 'f', text: 'Paraíba', value: 'PB' },
+	{ key: 'm', text: 'Pernambuco', value: 'PE' },
+  ]
+
 class FormMaterial extends React.Component{
     
 	state = {
@@ -58,7 +64,7 @@ class FormMaterial extends React.Component{
 
 							<Form>
 
-								<Form.Group widths='equal'>
+							<Form.Group>
 
                                 <Form.Input
 
@@ -134,7 +140,7 @@ class FormMaterial extends React.Component{
 							
 
 								<Form.Group widths='equal' style={{marginTop: '4%'}}  className='form--empresa-salvar'>
-								<Link to={'/list-material'}>
+								
 									<Button
 										type="button"
 										inverted
@@ -148,7 +154,7 @@ class FormMaterial extends React.Component{
 										Voltar
 									
 									</Button>
-									</Link>
+								
 									<Container textAlign='right'>
 										
 										<Button

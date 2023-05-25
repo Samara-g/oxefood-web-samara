@@ -1,14 +1,16 @@
 import axios from 'axios';
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button, Container, Divider, Icon, Table } from 'semantic-ui-react';
-import { ENDERECO_API } from "../util/constantes";
+import { Button, Container, Divider, Header, Icon, Modal, Table } from 'semantic-ui-react';
+import { ENDERECO_API } from '../util/constantes';
 
-class ListComprador extends React.Component{
+class ListCliente extends React.Component{
 
     state = {
 
-       listaCompradores: []
+        listaClientes: [],
+        openModal: false,
+        idRemover: null,
       
     }
 
@@ -20,11 +22,11 @@ class ListComprador extends React.Component{
 
     carregarLista = () => {
 
-        axios.get(ENDERECO_API + "api/comprador")
+        axios.get(ENDERECO_API + "api/cliente")
         .then((response) => {
           
             this.setState({
-                listaCompradores: response.data
+               listaClientes: response.data
             })
         })
 
@@ -44,6 +46,44 @@ class ListComprador extends React.Component{
         return dataFormatada
     };
 
+    confirmaRemover = (id) => {
+
+        this.setState({
+            openModal: true,
+            idRemover: id
+        })  
+    }
+
+    setOpenModal = (val) => {
+
+        this.setState({
+            openModal: val
+        })
+   
+    };
+
+    remover = async () => {
+
+        await axios.delete(ENDERECO_API + 'api/cliente/' + this.state.idRemover)
+        .then((response) => {
+   
+            this.setState({ openModal: false })
+            console.log('Cliente removido com sucesso.')
+   
+            axios.get(ENDERECO_API + "api/cliente")
+            .then((response) => {
+           
+                this.setState({
+                    listaClientes: response.data
+                })
+            })
+        })
+        .catch((error) => {
+            this.setState({  openModal: false })
+            console.log('Erro ao remover um cliente.')
+        })
+    };
+
     render(){
         return(
             <div>
@@ -52,7 +92,7 @@ class ListComprador extends React.Component{
 
                     <Container textAlign='justified' >
 
-                        <h2> Comprador </h2>
+                        <h2> Cliente </h2>
 
                         <Divider />
 
@@ -67,7 +107,7 @@ class ListComprador extends React.Component{
                                 floated='right'
                             >
                                 <Icon name='clipboard outline' />
-                                <Link to={'/form-comprador'}>Novo</Link>
+                                <Link to={'/form-cliente'}>Novo</Link>
                             </Button>
 
                             <br/><br/><br/>
@@ -77,48 +117,42 @@ class ListComprador extends React.Component{
                                 <Table.Header>
                                     <Table.Row>
                                         <Table.HeaderCell>Nome</Table.HeaderCell>
-                                        <Table.HeaderCell>Valor de Comissão</Table.HeaderCell>
-                                        <Table.HeaderCell>Contratado Em</Table.HeaderCell>
-                                        <Table.HeaderCell>QTD Compras no Mês</Table.HeaderCell>
-                                        <Table.HeaderCell>Endereço Residencial</Table.HeaderCell>
-                                        <Table.HeaderCell>Trabalha em Home Office?</Table.HeaderCell>
+                                        <Table.HeaderCell>CPF</Table.HeaderCell>
+                                        <Table.HeaderCell>Data de Nascimento</Table.HeaderCell>
+                                        <Table.HeaderCell>Fone Celular</Table.HeaderCell>
+                                        <Table.HeaderCell>Fone Fixo</Table.HeaderCell>
                                         <Table.HeaderCell textAlign='center' width={2}>Ações</Table.HeaderCell>
                                     </Table.Row>
                                 </Table.Header>
                           
                                 <Table.Body>
 
-                                    { this.state.listaCompradores.map(c => (
+                                    { this.state.listaClientes.map(cliente => (
 
                                         <Table.Row>
-                                            <Table.Cell>{c.nome}</Table.Cell>
-                                            <Table.Cell>{c.comissao}</Table.Cell>
-                                            <Table.Cell>{this.formatarData(c.contratadoEm)}</Table.Cell>
-                                            <Table.Cell>{c.qtdComprasMediasMes}</Table.Cell>
-                                            <Table.Cell>{c.enderecoResidencial}</Table.Cell>
-                                            <Table.Cell>
-                                                {c.trabahoHomeOffice === true &&
-                                                    <span> Sim </span>
-                                                }
-                                                {c.trabahoHomeOffice === false &&
-                                                    <span> Não </span>
-                                                }
-                                            </Table.Cell>
+                                            <Table.Cell>{cliente.nome}</Table.Cell>
+                                            <Table.Cell>{cliente.cpf}</Table.Cell>
+                                            <Table.Cell>{this.formatarData(cliente.dataNascimento)}</Table.Cell>
+                                            <Table.Cell>{cliente.foneCelular}</Table.Cell>
+                                            <Table.Cell>{cliente.foneFixo}</Table.Cell>
                                             <Table.Cell textAlign='center'>
                                               
-                                                <Button
-                                                   inverted
-                                                   circular
-                                                   icon='edit'
-                                                   color='blue'
-                                                   itle='Clique aqui para editar os dados deste cliente' /> &nbsp;
+                                            <Button
+                                                inverted
+                                                circular
+                                                color='green'
+                                                title='Clique aqui para editar os dados deste cliente'
+                                                icon>
+                                                    <Link to="/form-cliente" state={{id: cliente.id}} style={{color: 'green'}}> <Icon name='edit' /> </Link>
+                                            </Button> &nbsp;
                                                    
                                                 <Button
                                                    inverted
                                                    circular
                                                    icon='trash'
                                                    color='red'
-                                                   title='Clique aqui para remover este cliente' />
+                                                   title='Clique aqui para remover este cliente' 
+                                                   onClick={e => this.confirmaRemover(cliente.id)}/>
 
                                             </Table.Cell>
                                         </Table.Row>
@@ -129,9 +163,30 @@ class ListComprador extends React.Component{
                        </div>
                    </Container>
                </div>
+
+               <Modal
+                    basic
+                    onClose={() => this.setOpenModal(false)}
+                    onOpen={() => this.setOpenModal(true)}
+                    open={this.state.openModal}
+                >
+                    <Header icon>
+                        <Icon name='trash' />
+                        <div style={{marginTop: '5%'}}> Tem certeza que deseja remover esse registro? </div>
+                    </Header>
+                    <Modal.Actions>
+                        <Button basic color='red' inverted onClick={() => this.setOpenModal(false)}>
+                            <Icon name='remove' /> Não
+                        </Button>
+                        <Button color='green' inverted onClick={() => this.remover()}>
+                            <Icon name='checkmark' /> Sim
+                        </Button>
+                    </Modal.Actions>
+                </Modal>
+
            </div>
        )
    }
 }
 
-export default ListComprador;
+export default ListCliente;
